@@ -1,0 +1,43 @@
+module.exports = {
+  env: { node: true },
+  extends: ['plugin:prettier/recommended', 'eslint:recommended', 'plugin:@typescript-eslint/recommended'],
+  ignorePatterns: ['dist', '.eslintrc.cjs'],
+  parser: '@typescript-eslint/parser',
+  overrides: [
+    {
+      files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx', '**/*.cjs', '**/*.mjs'],
+      plugins: ['@typescript-eslint', 'unused-imports', 'simple-import-sort'],
+      rules: {
+        'prettier/prettier': [
+          'error',
+          {
+            singleQuote: true,
+            trailingComma: 'es5',
+            endOfLine: 'auto',
+            printWidth: 120,
+          },
+        ],
+        'import/prefer-default-export': 'off',
+        'no-param-reassign': 'off',
+        'simple-import-sort/exports': 'error',
+        '@typescript-eslint/no-unused-vars': 'off',
+        '@typescript-eslint/no-non-null-assertion': 'off',
+        '@typescript-eslint/explicit-function-return-type': 'off',
+        '@typescript-eslint/explicit-module-boundary-types': 'off',
+        '@typescript-eslint/no-explicit-any': 'off',
+        '@typescript-eslint/ban-ts-comment': 'off',
+        '@typescript-eslint/ban-types': 'off',
+        'unused-imports/no-unused-imports': 'error',
+        'unused-imports/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+        'no-plusplus': 'off',
+        'no-case-declarations': 'off',
+        '@typescript-eslint/no-unnecessary-condition': 'error',
+        '@typescript-eslint/no-unnecessary-type-assertion': 'error',
+        '@typescript-eslint/no-useless-empty-export': 'error',
+        '@typescript-eslint/no-unsafe-assignment': 'error',
+        '@typescript-eslint/no-unused-expressions': 'error',
+        '@typescript-eslint/switch-exhaustiveness-check': 'error',
+      },
+    },
+  ],
+};

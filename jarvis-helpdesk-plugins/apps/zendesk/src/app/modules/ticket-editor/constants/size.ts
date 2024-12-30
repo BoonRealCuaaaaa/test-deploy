@@ -1,0 +1,4 @@
+export const TICKET_EDITOR_DEFAULT_SIZE = {
+  WIDTH: 230,
+  HEIGHT: 105,
+};

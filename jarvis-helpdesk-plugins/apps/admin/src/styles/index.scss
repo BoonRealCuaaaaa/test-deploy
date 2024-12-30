@@ -1,0 +1,56 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  @apply font-inter;
+  @apply text-sm;
+  // https://forum.figma.com/t/font-in-browser-seem-bolder-than-in-the-figma/24656/6
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-smooth: never;
+
+  @apply focus:outline-none;
+
+  ::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 2px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  :hover::-webkit-scrollbar-thumb {
+    background: rgba(225, 225, 225);
+
+    &:hover {
+      cursor: default;
+      background: rgb(215, 215, 215);
+    }
+  }
+
+  :hover::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar {
+    max-width: 4px;
+    max-height: 4px;
+  }
+}
+
+:root {
+  @apply text-primary-950;
+}
+
+html,
+body {
+  font-size: 16px;
+  min-height: 100dvh;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}

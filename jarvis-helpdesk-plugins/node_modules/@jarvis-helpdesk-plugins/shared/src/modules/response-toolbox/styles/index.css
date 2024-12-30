@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .menu-title {
+    @apply text-base text-primary-500 font-semibold;
+  }
+
+  .menu-section {
+    @apply text-xs text-slate-400;
+  }
+
+  .detail {
+    @apply font-medium text-xs text-slate-400;
+  }
+}

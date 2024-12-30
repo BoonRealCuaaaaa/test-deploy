@@ -1,0 +1,1 @@
+This folder is copied from the original [zendesk/app_scaffold](https://github.com/zendesk/app_scaffolds/tree/master/packages/react/rollup) and then converted to TypeScript.

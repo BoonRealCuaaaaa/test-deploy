@@ -1,0 +1,19 @@
+{
+  "files.eol": "\n",
+  "prettier.ignorePath": ".gitignore",
+  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  "editor.formatOnSave": false,
+  "editor.codeActionsOnSave": [
+    "source.addMissingImports",
+    "source.fixAll.eslint"
+  ],
+  "[json][jsonc][yaml][html][css][scss]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[sql]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "inferrinizzard.prettier-sql-vscode"
+  },
+  "liveServer.settings.port": 5501
+}

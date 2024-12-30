@@ -1,0 +1,47 @@
+{
+  "name": "@jarvis-helpdesk-plugins/zendesk",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "preview": "vite preview",
+    "build:dev": "rimraf dist && vite build --mode development",
+    "build:prod": "rimraf dist && vite build --mode production",
+    "zcli:src": "npx @zendesk/zcli@1.0.0-beta.51 apps:server src",
+    "zcli:dist": "npx @zendesk/zcli@1.0.0-beta.51 apps:server dist",
+    "lint": "eslint . --fix && tsc",
+    "check-types": "tsc --noEmit --pretty"
+  },
+  "dependencies": {
+    "@jarvis-helpdesk-plugins/shared": "*",
+    "@radix-ui/react-slot": "^1.1.0",
+    "@radix-ui/react-switch": "^1.1.1",
+    "@tanstack/react-query": "^5.37.1",
+    "axios": "1.7.4",
+    "classnames": "^2.5.1",
+    "immer": "^10.1.1",
+    "lodash": "^4.17.21",
+    "react": "^18.3.1",
+    "react-bootstrap-icons": "^1.11.4",
+    "react-dom": "^18.3.1",
+    "use-undo": "^1.1.1",
+    "zustand": "^4.5.2"
+  },
+  "devDependencies": {
+    "@jarvis-helpdesk-plugins/eslint-config": "*",
+    "@jarvis-helpdesk-plugins/typescript-config": "*",
+    "@types/react": "^18.3.10",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react-swc": "^3.5.0",
+    "autoprefixer": "^10.4.20",
+    "globals": "^15.9.0",
+    "postcss": "^8.4.47",
+    "sass": "^1.80.1",
+    "tailwindcss": "^3.4.14",
+    "typescript": "^5.2.2",
+    "vite": "^5.4.8",
+    "vite-plugin-svgr": "^4.2.0",
+    "vite-tsconfig-paths": "^4.2.1"
+  }
+}

@@ -1,0 +1,5 @@
+export enum AssistantLimitation {
+  MAX_FILES_PER_ASSISTANT = 20,
+  MAX_TOKENS_PER_FILE = 2_000_000,
+  MAX_FILE_SIZE_ALLOWED = 512 * 1024 * 1024, // 512 MB
+}

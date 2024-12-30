@@ -1,0 +1,111 @@
+services:
+  # Postgres container
+  postgres:
+    # Dùng image của postgres trên docker hub
+    image: postgres:latest
+    # Cấu hình môi trường
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: jarvis_helpdesk_plugins_dev
+    # Ánh xạ thư mục data của postgres
+    # Với thư mục data của container
+    # Mục đích để lưu trữ dữ liệu không bị xóa khi container bị xóa
+    # postgres-data là tên volume (được tạo và quản lý bởi docker)
+    # /var/lib/postgresql/data là thư mục data của postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    # Mở cổng 5432 của container ra cổng 5432 của máy host
+    ports:
+      - "5432:5432"
+    # Kết nối vào mạng jarvis-plugin-network
+    # Giúp các container giao tiếp với nhau mà không cần lộ port ra ngoài
+    networks:
+      - jarvis-plugin-network
+
+  # Nginx container làm reverse proxy
+  nginx:
+    image: nginx:latest
+    # Ánh xạ file cấu hình nginx, nhằm cấu hình reverse proxy
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    # Mở cổng 80
+    ports:
+      - "80:80"
+    networks:
+      - jarvis-plugin-network
+    # Đảm bảo nginx chạy sau khi các container khác đã chạy
+    depends_on:
+      - jarvis-helpdesk-admin
+      - jarvis-helpdesk-plugin-api
+      - jarvis-helpdesk-ai-module
+
+  # Container chứa ứng dụng admin
+  jarvis-helpdesk-admin:
+    # Build từ Dockerfile trong thư mục jarvis-helpdesk-admin
+    build:
+      context: ./jarvis-helpdesk-plugins
+      dockerfile: Dockerfile
+    networks:
+      - jarvis-plugin-network
+    ports:
+      - "8888:8888"
+    depends_on:
+      - jarvis-helpdesk-plugin-api
+    # Mở cổng 8888 để các container khác trong cùng 1 mạng có thể giao tiếp với container này
+    expose:
+      - 8888
+
+  jarvis-helpdesk-plugin-api:
+    # Build từ Dockerfile trong thư mục jarvis-helpdesk-plugin-api
+    build:
+      context: ./jarvis-helpdesk-plugin-api
+      dockerfile: Dockerfile
+    # Cấu hình các biến môi trường
+    environment:
+      - APP_PORT=5555
+      - SWAGGER_ENABLED=true
+      - AI_MODULE_API_URL=http://jarvis-helpdesk-ai-module:5502
+      - DATABASE_HOST=postgres
+      - DATABASE_MAX_CONNECTIONS=100
+      - DATABASE_NAME=jarvis_helpdesk_plugins_dev
+      - DATABASE_PASSWORD=password
+      - DATABASE_PORT=5432
+      - DATABASE_REJECT_UNAUTHORIZED=false
+      - DATABASE_SSL_ENABLED=false
+      - DATABASE_TYPE=postgres
+      - DATABASE_USERNAME=postgres
+    # Cần khởi chạy sau container postgres
+    depends_on:
+      - postgres
+    ports:
+      - "5554:5555"
+    expose:
+      - 5555
+    networks:
+      - jarvis-plugin-network
+
+  jarvis-helpdesk-ai-module:
+    build:
+      context: ./jarvis-helpdesk-ai-module
+      dockerfile: Dockerfile
+    environment:
+      - APP_PORT=5502
+      - SWAGGER_ENABLED=true
+      - KB_ENDPOINT=https://knowledge-api.jarvis.cx
+      - KB_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg4NmIwODBiLWVkNTEtNGMyZi1hYTM0LTI5OWUxNzcyODhkOCIsImVtYWlsIjoibmtob2FuZzIxQGNsYy5maXR1cy5lZHUudm4iLCJpYXQiOjE3MzU1NDc1NjksImV4cCI6MTczNTYzMzk2OX0.GdPK6YK9bVRQCg4mshiYXqn0ABzAT26AdI8BpzsYtwo
+      - KB_ASSISTANT_ID=ff74318f-d961-4d10-a9e0-0e14aea105d6
+    ports:
+      - "5501:5502"
+    expose:
+      - 5502
+    networks:
+      - jarvis-plugin-network
+
+# Tạo volume postgres-data
+volumes:
+  postgres-data:
+
+# Tạo mạng jarvis-plugin-network
+networks:
+  jarvis-plugin-network:

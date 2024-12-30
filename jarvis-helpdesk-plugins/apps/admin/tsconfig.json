@@ -1,0 +1,16 @@
+{
+  "extends": "@jarvis-helpdesk-plugins/typescript-config/react.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "jsx": "react-jsx",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "paths": {
+      "@/src/*": ["./src/*"],
+      "@/shared/*": ["../../packages/shared/src/*"]
+    }
+  },
+  "include": ["src", "*.mjs", "../../packages/shared/src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}

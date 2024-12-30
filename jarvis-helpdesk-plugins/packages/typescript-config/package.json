@@ -1,0 +1,13 @@
+{
+  "name": "@jarvis-helpdesk-plugins/typescript-config",
+  "version": "0.0.0",
+  "private": true,
+  "files": [
+    "base.json",
+    "react.json"
+  ],
+  "scripts": {
+    "lint": "prettier --write .",
+    "check-types": "echo 'No type checking required for this package'"
+  }
+}

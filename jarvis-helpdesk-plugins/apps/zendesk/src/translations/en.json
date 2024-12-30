@@ -1,0 +1,53 @@
+{
+  "app": {
+    "name": "Jarvis Helpdesk AI Copilot",
+    "short_description": "Jarvis is an AI copilot for Zendesk Helpdesk",
+    "long_description": "Jarvis is an AI copilot for Zendesk Helpdesk",
+    "installation_instructions": "Configure the following app settings, then click Install:...",
+    "title": "Jarvis Helpdesk AI Copilot"
+  },
+  "ticket_sidebar": {
+    "hello": "Hello from Ticket Side Bar"
+  },
+  "ticket_editor": {
+    "response_toolbox": "Response Toolbox",
+    "formalization": "Formalization",
+    "on_working_msg": "This may take a few seconds.",
+    "actions": {
+      "draft_response": {
+        "title": "Draft response",
+        "re_draft_title": "Re-draft response",
+        "on_working": "Drafting response...",
+        "on_success": "Response drafted successfully",
+        "on_failed": "Failed to draft response"
+      },
+      "correct_spelling": {
+        "title": "Correct spelling",
+        "on_working": "Correcting spelling...",
+        "on_success": "Spelling corrected successfully",
+        "on_failed": "Failed to correct spelling"
+      },
+      "simplify_words": {
+        "title": "Simplify words",
+        "on_working": "Simplifying words...",
+        "on_success": "Your response was simplified successfully",
+        "on_failed": "Failed to simplify words"
+      },
+      "shorten_response": {
+        "title": "Shorten response",
+        "on_working": "Shortening response...",
+        "on_success": "Your response was shortened successfully",
+        "on_failed": "Failed to shorten response"
+      },
+      "lengthen_response": {
+        "title": "Lengthen response",
+        "on_working": "Lengthening response...",
+        "on_success": "Your response was lengthened successfully",
+        "on_failed": "Failed to lengthen response"
+      }
+    }
+  },
+  "nav_bar": {
+    "hello": "Hello from Nav Bar"
+  }
+}

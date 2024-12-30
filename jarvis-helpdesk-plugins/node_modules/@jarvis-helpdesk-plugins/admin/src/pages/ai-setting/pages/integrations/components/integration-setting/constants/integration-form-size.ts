@@ -1,0 +1,3 @@
+export const INTEGRATION_FORM_SIZE = {
+  MAX_DOMAIN: 100,
+};

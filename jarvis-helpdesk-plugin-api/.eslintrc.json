@@ -1,0 +1,73 @@
+{
+  "root": true,
+  "plugins": ["@typescript-eslint/eslint-plugin"],
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "overrides": [
+    {
+      "files": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
+      "plugins": ["@typescript-eslint", "unused-imports", "simple-import-sort"],
+      "rules": {
+        "prettier/prettier": [
+          "error",
+          {
+            "singleQuote": true,
+            "trailingComma": "es5",
+            "endOfLine": "auto",
+            "printWidth": 120
+          }
+        ],
+        "import/prefer-default-export": "off",
+        "simple-import-sort/imports": [
+          "error",
+          {
+            "groups": [
+              // Packages `nestjs` related packages.
+              ["^@nestjs", "^@?\\w", "^express"],
+              // Internal packages.
+              ["^(@|modules)(/.*|$)"],
+              // Side effect imports.
+              ["^\\u0000"],
+              // Parent imports. Put `..` last.
+              ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
+              // Other relative imports. Put same-folder imports and `.` last.
+              ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"]
+            ]
+          }
+        ],
+        "react/react-in-jsx-scope": "off",
+        "no-param-reassign": "off",
+        "simple-import-sort/exports": "error",
+        "@typescript-eslint/no-unused-vars": "off",
+        "@typescript-eslint/no-non-null-assertion": "off",
+        "unused-imports/no-unused-imports": "error",
+        "unused-imports/no-unused-vars": [
+          "error",
+          { "argsIgnorePattern": "^_" }
+        ],
+        "no-plusplus": "off",
+        "no-case-declarations": "off",
+        "@typescript-eslint/interface-name-prefix": "off",
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "no-unused-vars": "off",
+        "require-await": "off",
+        "@typescript-eslint/require-await": "error",
+        "@typescript-eslint/no-floating-promises": "error",
+        "@typescript-eslint/no-unnecessary-condition": "error",
+        "@typescript-eslint/no-unnecessary-type-assertion": "error",
+        "@typescript-eslint/no-unsafe-assignment": "error",
+        "@typescript-eslint/no-useless-empty-export": "error",
+        "@typescript-eslint/no-unused-expressions": "error",
+        "@typescript-eslint/switch-exhaustiveness-check": "error"
+      }
+    }
+  ]
+}

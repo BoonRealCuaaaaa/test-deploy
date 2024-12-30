@@ -1,0 +1,32 @@
+{
+  "name": "@jarvis-helpdesk-plugins/eslint-config",
+  "version": "0.0.0",
+  "private": true,
+  "files": [
+    "base.cjs",
+    "react.cjs"
+  ],
+  "scripts": {
+    "lint": "eslint . --fix",
+    "check-types": "echo 'No type checking required for this package'"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2",
+    "eslint": "^8.57.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-jsx-a11y": "^6.7.1",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.6",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "eslint-plugin-unused-imports": "^2.0.0",
+    "prettier": "^3.2.5",
+    "@typescript-eslint/eslint-plugin": "^5.59.7",
+    "prettier-plugin-tailwindcss": "^0.6.5",
+    "@typescript-eslint/parser": "^5.59.7"
+  }
+}

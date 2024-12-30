@@ -1,0 +1,6 @@
+{
+  "extends": "@jarvis-helpdesk-plugins/typescript-config/base.json",
+  "compilerOptions": {
+    "jsx": "react"
+  }
+}

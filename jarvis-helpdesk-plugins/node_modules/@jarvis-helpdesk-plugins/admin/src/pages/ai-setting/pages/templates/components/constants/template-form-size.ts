@@ -1,0 +1,5 @@
+export const TEMPLATE_FORM_SIZE = {
+  MAX_NAME: 50,
+  MAX_DESCRIPTION: 100,
+  MAX_TEMPLATE: 2000,
+};

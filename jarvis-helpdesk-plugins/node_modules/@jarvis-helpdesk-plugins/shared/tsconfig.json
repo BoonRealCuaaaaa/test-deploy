@@ -1,0 +1,11 @@
+{
+  "extends": "@jarvis-helpdesk-plugins/typescript-config/react.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/shared/*": ["./src/*"]
+    }
+  },
+  "include": ["src", "*.mjs", "../../apps/zendesk/src/app/apis/action.ts"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}

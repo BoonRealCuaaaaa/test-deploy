@@ -1,0 +1,13 @@
+{
+  "extends": "@jarvis-helpdesk-plugins/typescript-config/react.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/src/*": ["./src/*"],
+      "@/rollup/*": ["./rollup/*"],
+      "@/shared/*": ["../../packages/shared/src/*"]
+    }
+  },
+  "include": ["src", "*.mjs", "../../packages/shared/src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}
