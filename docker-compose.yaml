@@ -18,7 +18,7 @@ services:
     # Mở cổng 5432 của container ra cổng 5432 của máy host
     ports:
       - "5432:5432"
-    restart: "unless-stopped"
+    # restart: "unless-stopped"
     # Kết nối vào mạng jarvis-plugin-network
     # Giúp các container giao tiếp với nhau mà không cần lộ port ra ngoài
     networks:
@@ -36,7 +36,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
-    restart: "unless-stopped"
+    # restart: "unless-stopped"
     networks:
       - jarvis-plugin-network
     # Đảm bảo nginx chạy sau khi các container khác đã chạy
@@ -55,7 +55,7 @@ services:
       - jarvis-plugin-network
     ports:
       - "8888:8888"
-    restart: "unless-stopped"
+    # restart: "unless-stopped"
     depends_on:
       - jarvis-helpdesk-plugin-api
     # Mở cổng 8888 để các container khác trong cùng 1 mạng có thể giao tiếp với container này
