@@ -34,8 +34,8 @@ services:
       - ./certbot/www:/var/www/certbot
     # Mở cổng 80
     ports:
-      - "80:80"
-      - "443:443"
+      - 80:80
+      - 443:443
     # restart: "unless-stopped"
     networks:
       - jarvis-plugin-network
@@ -116,7 +116,7 @@ services:
     volumes:
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
-    command: certonly --test-cert --webroot -w /var/www/certbot --keep-until-expiring --email hiiback0608@gmail.com -d jarvis-admin.shop --agree-tos
+    command: certonly --webroot -w /var/www/certbot --keep-until-expiring --email hiiback0608@gmail.com -d jarvis-admin.shop --agree-tos
 
 # Tạo volume postgres-data
 volumes:
