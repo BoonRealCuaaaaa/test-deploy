@@ -22,7 +22,7 @@ async function bootstrap() {
     defaultVersion: '1',
   });
 
-  app.useLogger(app.get(Logger));
+  // app.useLogger(app.get(Logger));
   app.setGlobalPrefix(GLOBAL_ROOT_PREFIX);
   app.useGlobalPipes(
     new ValidationPipe({
