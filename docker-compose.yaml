@@ -18,6 +18,7 @@ services:
     # Mở cổng 5432 của container ra cổng 5432 của máy host
     ports:
       - "5432:5432"
+    restart: "unless-stopped"
     # Kết nối vào mạng jarvis-plugin-network
     # Giúp các container giao tiếp với nhau mà không cần lộ port ra ngoài
     networks:
@@ -29,9 +30,13 @@ services:
     # Ánh xạ file cấu hình nginx, nhằm cấu hình reverse proxy
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
     # Mở cổng 80
     ports:
       - "80:80"
+      - "443:443"
+    restart: "unless-stopped"
     networks:
       - jarvis-plugin-network
     # Đảm bảo nginx chạy sau khi các container khác đã chạy
@@ -50,6 +55,7 @@ services:
       - jarvis-plugin-network
     ports:
       - "8888:8888"
+    restart: "unless-stopped"
     depends_on:
       - jarvis-helpdesk-plugin-api
     # Mở cổng 8888 để các container khác trong cùng 1 mạng có thể giao tiếp với container này
@@ -62,6 +68,7 @@ services:
       context: ./jarvis-helpdesk-plugin-api
       dockerfile: Dockerfile
     # Cấu hình các biến môi trường
+    restart: "unless-stopped"
     environment:
       - APP_PORT=5555
       - SWAGGER_ENABLED=true
@@ -89,6 +96,7 @@ services:
     build:
       context: ./jarvis-helpdesk-ai-module
       dockerfile: Dockerfile
+    restart: "unless-stopped"
     environment:
       - APP_PORT=5502
       - SWAGGER_ENABLED=true
@@ -101,6 +109,14 @@ services:
       - 5502
     networks:
       - jarvis-plugin-network
+
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    command: certonly --webroot -w /var/www/certbot --keep-until-expiring --email hiiback0608@gmail.com -d jarvis-admin.shop --agree-tos
 
 # Tạo volume postgres-data
 volumes:
