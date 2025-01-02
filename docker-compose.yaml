@@ -1,8 +1,6 @@
 services:
-  # Postgres container
   postgres:
     image: postgres:latest
-    # Cấu hình môi trường
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
@@ -19,7 +17,8 @@ services:
   nginx:
     image: nginx:latest
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      # - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/nginx.conf.template:/etc/nginx/nginx.conf.template
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
     ports:
@@ -28,6 +27,10 @@ services:
     restart: "unless-stopped"
     networks:
       - jarvis-plugin-network
+    env_file:
+      - ./nginx/.env
+    entrypoint: >
+      /bin/bash -c "printenv && envsubst < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf && nginx -g 'daemon off;'"
     depends_on:
       - jarvis-helpdesk-admin
       - jarvis-helpdesk-plugin-api
@@ -49,26 +52,26 @@ services:
       - 8888
 
   jarvis-helpdesk-plugin-api:
-    # Build từ Dockerfile trong thư mục jarvis-helpdesk-plugin-api
     build:
       context: ./jarvis-helpdesk-plugin-api
       dockerfile: Dockerfile
-    # Cấu hình các biến môi trường
     restart: "unless-stopped"
-    environment:
-      - APP_PORT=5555
-      - SWAGGER_ENABLED=true
-      - AI_MODULE_API_URL=http://jarvis-helpdesk-ai-module:5502
-      - DATABASE_HOST=postgres
-      - DATABASE_MAX_CONNECTIONS=100
-      - DATABASE_NAME=jarvis_helpdesk_plugins_dev
-      - DATABASE_PASSWORD=password
-      - DATABASE_PORT=5432
-      - DATABASE_REJECT_UNAUTHORIZED=false
-      - DATABASE_SSL_ENABLED=false
-      - DATABASE_TYPE=postgres
-      - DATABASE_USERNAME=postgres
-    # Cần khởi chạy sau container postgres
+    env_file:
+      - ./jarvis-helpdesk-plugin-api/.env
+
+    # environment:
+    #   - APP_PORT=5555
+    #   - SWAGGER_ENABLED=true
+    #   - AI_MODULE_API_URL=http://jarvis-helpdesk-ai-module:5502
+    #   - DATABASE_HOST=postgres
+    #   - DATABASE_MAX_CONNECTIONS=100
+    #   - DATABASE_NAME=jarvis_helpdesk_plugins_dev
+    #   - DATABASE_PASSWORD=password
+    #   - DATABASE_PORT=5432
+    #   - DATABASE_REJECT_UNAUTHORIZED=false
+    #   - DATABASE_SSL_ENABLED=false
+    #   - DATABASE_TYPE=postgres
+    #   - DATABASE_USERNAME=postgres
     depends_on:
       - postgres
     ports:
@@ -83,12 +86,14 @@ services:
       context: ./jarvis-helpdesk-ai-module
       dockerfile: Dockerfile
     restart: "unless-stopped"
-    environment:
-      - APP_PORT=5502
-      - SWAGGER_ENABLED=true
-      - KB_ENDPOINT=https://knowledge-api.jarvis.cx
-      - KB_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg4NmIwODBiLWVkNTEtNGMyZi1hYTM0LTI5OWUxNzcyODhkOCIsImVtYWlsIjoibmtob2FuZzIxQGNsYy5maXR1cy5lZHUudm4iLCJpYXQiOjE3MzU1NDc1NjksImV4cCI6MTczNTYzMzk2OX0.GdPK6YK9bVRQCg4mshiYXqn0ABzAT26AdI8BpzsYtwo
-      - KB_ASSISTANT_ID=ff74318f-d961-4d10-a9e0-0e14aea105d6
+    env_file:
+      - ./jarvis-helpdesk-ai-module/.env
+    # environment:
+    #   - APP_PORT=5502
+    #   - SWAGGER_ENABLED=true
+    #   - KB_ENDPOINT=https://knowledge-api.jarvis.cx
+    #   - KB_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg4NmIwODBiLWVkNTEtNGMyZi1hYTM0LTI5OWUxNzcyODhkOCIsImVtYWlsIjoibmtob2FuZzIxQGNsYy5maXR1cy5lZHUudm4iLCJpYXQiOjE3MzU1NDc1NjksImV4cCI6MTczNTYzMzk2OX0.GdPK6YK9bVRQCg4mshiYXqn0ABzAT26AdI8BpzsYtwo
+    #   - KB_ASSISTANT_ID=ff74318f-d961-4d10-a9e0-0e14aea105d6
     ports:
       - "5501:5502"
     expose:
@@ -99,17 +104,13 @@ services:
   certbot:
     image: certbot/certbot
     container_name: certbot
-    # Mount vào container các thư mục lưu chứng chỉ
     volumes:
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
-    # Yêu cầu chứng chỉ
     command: certonly --webroot -w /var/www/certbot --keep-until-expiring --email hiiback0608@gmail.com -d jarvis-admin.shop --agree-tos
 
-# Tạo volume postgres-data
 volumes:
   postgres-data:
 
-# Tạo mạng jarvis-plugin-network
 networks:
   jarvis-plugin-network:
